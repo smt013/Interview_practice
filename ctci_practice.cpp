@@ -11,65 +11,6 @@ using namespace std;
 
 //global variables
 array<int,8> a1 = {1,2,3,4,5,7,8,34};
-vector<int> list = {3,1,2,9,7,5};
-
-void merge(vector<int> input, int l, int m, int r) {
-    
-    l = 0;
-    r = input.size()-1;
-    int n1 = m-l+1;
-    int n2 = r-m;
-    
-    int a1[n1];
-    int a2[n2];
-    
-    for(int i=0; i<n1; i++) {
-        a1[i] = input[i];
-    }
-    for(int i=n1; i<n2; i++) {
-        a2[i] = input[i];
-    }
-    
-    int i=0;
-    int j=0;
-    int k = 0;
-    
-    while(i<n1 && j<n2) {
-        if(a1[i] < a2[j]) {
-            input[k] = a1[i];
-            i++;
-        }
-        else {
-            input[k] = a2[j];
-            j++;
-        }
-        k++;
-    }
-    
-    while(i<n1) {
-        input[k] = a1[i];
-        i++;
-        k++;
-    }
-    
-    while(j<n2) {
-        input[k] = a2[j];
-        j++;
-        k++;
-    }
-    
-}
-
-void mergeSort(vector<int> input, int l, int r) {
-    if(l < r) {
-        int m = (l+r)/2;
-    
-        mergeSort(input,l,m);
-        mergeSort(input,m+1,r);
-        
-        merge(input,l,m,r);
-    }
-}
 
 //binary search 
 void binary_search(int low, int high, int target) {
@@ -195,8 +136,6 @@ void is_perm(string s1, string s2) {
 }
 
 int main() {
-
-    mergeSort(list,0,list.size()-1);
     
     for(int i=0; i<list.size(); i++) {
         cout << list[i] << endl;
