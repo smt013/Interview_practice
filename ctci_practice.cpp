@@ -135,12 +135,13 @@ void check_permutation(string s1, string s2) {
 	cout << "is perm" << endl;
 }
 
+//convert string into valid url (replace all spaces with %20)
+//my implementation attempts to do this in place (no other strings or DS's)
 string URLify(char * s, int len) {
+	len += 3;
 	for(int i=0; i<len; i++) {
-
 		if(s[i] == ' ') {
 			for(int k=len-1; k>=i+3; k--) {
-				cout << s << endl;
 				s[k] = s[k-2];
 			}
 			s[i] = '%';
@@ -149,6 +150,10 @@ string URLify(char * s, int len) {
 		}
 	}
 	return s;
+}
+
+string palindrome_permutation() {
+	return "not done yet";
 }
 
 int main() {
@@ -174,9 +179,9 @@ int main() {
 	is_unique2("AbcdefghijklmnopqrstuvwxyzA");
 
 	check_permutation("abcd","aacd");*/
-	char str[] = "hell ooo     ";
+	char str[] = "hell ooo ooo o     ";
 
-	cout << URLify(str,8);
+	cout << URLify(str,16);
 
 
 }
