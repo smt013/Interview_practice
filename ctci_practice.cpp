@@ -53,7 +53,7 @@ int count_diff(vector<int> input, int k) {
 	return sum;
 }
 
-//find all solutions to a^3 + b^3 = c^3 + d^3 
+//find all solutions to a^3 + b^3 = c^3 + d^3 for a,b,c,d between 1,1000 
 //my implementation assums a,b,c,d have to be unique
 void cube_sums() {
 
@@ -135,6 +135,22 @@ void check_permutation(string s1, string s2) {
 	cout << "is perm" << endl;
 }
 
+string URLify(char * s, int len) {
+	for(int i=0; i<len; i++) {
+
+		if(s[i] == ' ') {
+			for(int k=len-1; k>=i+3; k--) {
+				cout << s << endl;
+				s[k] = s[k-2];
+			}
+			s[i] = '%';
+			s[i+1] = '2';
+			s[i+2] = '0';
+		}
+	}
+	return s;
+}
+
 int main() {
 	vector<int> v1;
 	vector<int> v2;
@@ -145,6 +161,7 @@ int main() {
 	v1.push_back(2);
 	v1.push_back(12);
 	v1.push_back(3);
+
 	/*cout << count_diff(v1,2) << endl;
 	
 	int target = 4;
@@ -157,6 +174,9 @@ int main() {
 	is_unique2("AbcdefghijklmnopqrstuvwxyzA");
 
 	check_permutation("abcd","aacd");*/
+	char str[] = "hell ooo     ";
+
+	cout << URLify(str,8);
 
 
 }
