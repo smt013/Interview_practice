@@ -83,7 +83,7 @@ void cube_sums() {
 } 
 
 //see if a string contains only unique chars
-void unique_chars1(string s) {
+void is_unique1(string s) {
 	int arr[26] = {0};
 
 	for(char c : s) {
@@ -98,7 +98,7 @@ void unique_chars1(string s) {
 }
 
 //see if a string contains only unique chars without using DS's
-void unique_chars2(string s) {
+void is_unique2(string s) {
 	for(int i=0; i<s.length(); i++) {
 		for(int j=i+1; j<s.length(); j++) {
 			if(tolower(s[i]) == tolower(s[j])) {
@@ -111,7 +111,7 @@ void unique_chars2(string s) {
 }
 
 //decide whether two strings are permutations of eachother
-void is_perm(string s1, string s2) {
+void check_permutation(string s1, string s2) {
 	if(s1.length() != s2.length()) {
 		cout << "not a perm" << endl;
 		return;
@@ -136,11 +136,6 @@ void is_perm(string s1, string s2) {
 }
 
 int main() {
-    
-    for(int i=0; i<list.size(); i++) {
-        cout << list[i] << endl;
-    }
-
 	vector<int> v1;
 	vector<int> v2;
 	v1.push_back(1);
@@ -158,10 +153,10 @@ int main() {
 	
 	cube_sums();
 
-	unique_chars1("Abcdefghijklmnopqrstuvwxyz");
-	unique_chars2("AbcdefghijklmnopqrstuvwxyzA");
+	is_unique1("Abcdefghijklmnopqrstuvwxyz");
+	is_unique2("AbcdefghijklmnopqrstuvwxyzA");
 
-	is_perm("abcd","aacd");*/
+	check_permutation("abcd","aacd");*/
 
 
 }
