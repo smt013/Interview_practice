@@ -3,11 +3,14 @@
 #include <array>
 #include <unordered_set>
 #include <math.h>
+#include <cmath>
 #include <tuple>
 #include <fstream>
 #include <algorithm>
 
 using namespace std;
+
+vector<int> build_table(string s);
 
 //global variables
 array<int,8> a1 = {1,2,3,4,5,7,8,34};
@@ -111,10 +114,10 @@ void is_unique2(string s) {
 }
 
 //decide whether two strings are permutations of eachother
-void check_permutation(string s1, string s2) {
+bool check_permutation(string s1, string s2) {
 	if(s1.length() != s2.length()) {
-		cout << "not a perm" << endl;
-		return;
+		//cout << "not a perm" << endl;
+		return false;
 	}
 
 	int arr1[26] = {0};
@@ -127,12 +130,13 @@ void check_permutation(string s1, string s2) {
 
 	for(int i=0; i<26; i++) {
 		if(arr1[i] != arr2[i]) {
-			cout << "not perm" << endl;
-			return;
+			//cout << "not perm" << endl;
+			return false;
 		}
 	}
 
-	cout << "is perm" << endl;
+	//cout << "is perm" << endl;
+	return true;
 }
 
 //convert string into valid url (replace all spaces with %20)
@@ -152,8 +156,86 @@ string URLify(char * s, int len) {
 	return s;
 }
 
-string palindrome_permutation() {
-	return "not done yet";
+//check whether a permutation of string s 
+//is a palindrome.
+void palindrome_permutation(string s) {
+	const int alphabet_len = 26;
+	vector<int> letters(alphabet_len,0);
+
+	for(char c : s) {
+		if(tolower(c)-'a' >= 0)
+			letters[tolower(c)-'a']++;  
+	}
+
+	int odds = 0;
+
+	for(int i=0; i<alphabet_len; i++) {
+		if(letters[i]%2 != 0)
+			odds++;
+		if(odds > 1) {
+			cout << "s is not a palindrome permutation" << endl;
+			return;
+		}
+	}
+	cout << "s is a palindrome permutation" << endl;
+}
+
+
+//check if we can get to s2 by removing a char
+//adding a char, or replacing a char
+
+
+void one_away(string s1, string s2) {
+
+	int alphabet_len = 26;
+
+
+	int s1_len = s1.length();
+	int s2_len = s2.length();
+	if(abs(s1_len - s2_len) > 1) {
+		cout << "more than one away" << endl;
+		return;
+	}
+
+	if(check_permutation(s1,s2)) {
+		cout << "zero away" << endl;
+		return;
+	}
+
+	vector<int> table = build_table(s1);
+	for(char c : s2) {
+		int index = tolower(c) - 'a';
+		if(table[index] == 0)
+			table[index]++;
+		else
+			table[index]--;
+	}
+	//debugging output
+	cout << "|";
+	for(int i=0; i<alphabet_len; i++) {
+		cout << table[i] << "|";
+	}
+
+	int table_sum = 0;
+
+	for(int i=0; i<alphabet_len; i++)
+		table_sum += table[i]; 
+
+	if(table_sum <= 2) 
+		cout << "one away" << endl;
+	else
+		cout << "more than one away" << endl;
+}
+
+//helper function for one_away
+vector<int> build_table(string s) {
+	int alphabet_len = 26;
+	vector<int> table(alphabet_len,0);
+
+	for(char c : s) 
+		table[c-'a']++;
+
+	return table;
 }
 
 int main() {
@@ -178,10 +260,13 @@ int main() {
 	is_unique1("Abcdefghijklmnopqrstuvwxyz");
 	is_unique2("AbcdefghijklmnopqrstuvwxyzA");
 
-	check_permutation("abcd","aacd");*/
+	cout << check_permutation("abcd","aacd");
 	char str[] = "hell ooo ooo o     ";
 
-	cout << URLify(str,16);
+	cout << URLify(str,14);
 
+	palindrome_permutation("Tact Coa");*/
+
+	one_away("pale","bake");
 
 }
