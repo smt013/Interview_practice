@@ -181,10 +181,9 @@ void palindrome_permutation(string s) {
 }
 
 
-//check if we can get to s2 by removing a char
-//adding a char, or replacing a char
-
-
+//check if we can get from s1 to s2 by 
+//removing a char adding a char, or replacing 
+//a char
 void one_away(string s1, string s2) {
 
 	int alphabet_len = 26;
@@ -210,11 +209,6 @@ void one_away(string s1, string s2) {
 		else
 			table[index]--;
 	}
-	//debugging output
-	cout << "|";
-	for(int i=0; i<alphabet_len; i++) {
-		cout << table[i] << "|";
-	}
 
 	int table_sum = 0;
 
@@ -236,6 +230,59 @@ vector<int> build_table(string s) {
 		table[c-'a']++;
 
 	return table;
+}
+
+//compress string by removing duplicates
+// in a row and replacing it with the number
+//of duplicates
+string string_compression(string s) {
+	string compress = "";
+	int curr_count = 1;
+
+	for(int i=1; i<s.length(); i++) {
+		if(s[i] != s[i-1]) {
+			compress += (s[i-1] + to_string(curr_count));
+			curr_count = 1;
+		}
+		else
+			curr_count++;
+	}
+	compress += (s[s.length()-1] + to_string(curr_count));
+
+	if(s.length() <= compress.length())
+		return s;
+	return compress;
+}
+
+void zero_matrix(vector<vector<int> > m) {
+	int n = m.size();
+	int temp;
+
+	for(int i=0; i<m.size(); i++) {
+		for(int j=0; j<m.size(); j++) {
+			cout << m[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	cout << "---------------------" << endl;
+
+	int k = n;
+	int y=0;
+	for(int i=0; i<n/2; i++) {
+		for(int j=i; j<n-i-1; j++) {
+			temp = m[j][n-i-1];
+			m[j][n-i-1] = m[i][j];
+			m[i][j] = temp;
+		}
+	}
+
+	for(int i=0; i<m.size(); i++) {
+		for(int j=0; j<m.size(); j++) {
+			cout << m[i][j] << " ";
+		}
+		cout << endl;
+	}
 }
 
 int main() {
@@ -265,8 +312,14 @@ int main() {
 
 	cout << URLify(str,14);
 
-	palindrome_permutation("Tact Coa");*/
+	palindrome_permutation("Tact Coa");
 
 	one_away("pale","bake");
+
+	string s = string_compression("aaabbbccb");
+	cout << s << endl;*/
+
+	vector<vector<int> > m = {{1,2,3},{4,5,6},{7,8,9}};
+	zero_matrix(m);
 
 }
