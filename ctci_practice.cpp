@@ -254,35 +254,56 @@ string string_compression(string s) {
 	return compress;
 }
 
-void zero_matrix(vector<vector<int> > m) {
+void print_matrix(vector<vector<int> > m) {
+	int n = m.size();
+
+	for(int i=0; i<n; i++) {
+		for(int j=0; j<n; j++) {
+			cout << m[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+vector<vector<int> > transpose_matrix(vector<vector<int> > m) {
 	int n = m.size();
 	int temp;
-
-	for(int i=0; i<m.size(); i++) {
-		for(int j=0; j<m.size(); j++) {
-			cout << m[i][j] << " ";
-		}
-		cout << endl;
-	}
-
-	cout << "---------------------" << endl;
-
-	int k = n;
-	int y=0;
-	for(int i=0; i<n/2; i++) {
-		for(int j=i; j<n-i-1; j++) {
-			temp = m[j][n-i-1];
-			m[j][n-i-1] = m[i][j];
-			m[i][j] = temp;
+	for(int i=0; i<n; i++) {
+		for(int j=i+1; j<n; j++) {
+			temp = m[i][j];
+			m[i][j] = m[j][i];
+			m[j][i] = temp;
 		}
 	}
+	return m;
+}
 
-	for(int i=0; i<m.size(); i++) {
-		for(int j=0; j<m.size(); j++) {
-			cout << m[i][j] << " ";
+vector<vector<int> > reverse_column_elements(vector<vector<int> > m) {
+	int n = m.size();
+	m = transpose_matrix(m);
+	vector<int> row;
+	int temp;
+
+	for(int i=0; i<n; i++) {
+		row = m[i];
+
+		for(int j=0; j<n/2; j++) {
+			temp = row[j];
+			row[j] = row[n-j-1];
+			row[n-j-1] = temp;
 		}
-		cout << endl;
+		m[i] = row;
 	}
+	return transpose_matrix(m);
+}
+
+//rotate matrix 90 degrees (not yet working)
+vector<vector<int> > rotate_matrix_90(vector<vector<int> > m) {
+	return reverse_column_elements(transpose_matrix(m));
+}
+
+vector<vector<int> > rotate_matrix_180(vector<vector<int> > m) {
+	return reverse_column_elements(transpose_matrix(reverse_column_elements(transpose_matrix(m))));
 }
 
 int main() {
@@ -320,6 +341,8 @@ int main() {
 	cout << s << endl;*/
 
 	vector<vector<int> > m = {{1,2,3},{4,5,6},{7,8,9}};
-	zero_matrix(m);
+	print_matrix(rotate_matrix_90(m));
+	cout << endl << endl;
+	print_matrix(rotate_matrix_180(m));
 
 }
