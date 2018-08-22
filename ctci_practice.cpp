@@ -310,10 +310,35 @@ vector<vector<int> > rotate_matrix_180(vector<vector<int> > m) {
 	return reverse_column_elements(transpose_matrix(reverse_column_elements(transpose_matrix(m))));
 }
 
-//if an element of an M x N matrix is zero, zero out the whole row and column.
+// if an element of an M x N matrix is zero, zero out the whole row and column. 
+// time: O(N*M)
+// space: O((N*M)^2)
 vector<vector<int> > zero_matrix(vector<vector<int> > m) {
 	int num_rows = m.size();
 	int num_cols = m[0].size();
+
+	vector<vector<int> > new_m = m;
+
+	//loop through NXM matrix
+	for(int row=0; row<num_rows; row++) {
+		for(int col=0; col<num_cols; col++) {
+
+			//check if element is 0
+			if(m[row][col] == 0) {
+				
+				//zero out everything on col
+				for(int i=0; i<num_rows; i++) {
+					new_m[i][col] = 0;
+				}
+
+				//zero out everything on row
+				for(int i=0; i<num_cols; i++) {
+					new_m[row][i] = 0;
+				}
+			}
+		}
+	}
+	return new_m;
 }
 
 int main() {
@@ -355,7 +380,28 @@ int main() {
 	cout << endl << endl;
 	print_matrix(rotate_matrix_180(m));*/
 
-	vector<vector<int> >m = {{1,2},{3,4},{5,6}};
-	cout << m[0].size() << endl;
+	vector<vector<int> >m = {{1,0},{3,4},{5,6}};
+
+	int row = m.size();
+	int col = m[0].size();
+
+	for(int i=0; i<row; i++) {
+		for(int j=0; j<col; j++) {
+			cout << m[i][j] << " ";
+		}
+		cout << endl;
+	}
+	cout << endl << endl;
+	vector<vector<int> > ret = zero_matrix(m);
+
+	row = ret.size();
+	col = ret[0].size();
+
+	for(int i=0; i<row; i++) {
+		for(int j=0; j<col; j++) {
+			cout << ret[i][j] << " ";
+		}
+		cout << endl;
+	}
 
 }
