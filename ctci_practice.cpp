@@ -254,6 +254,7 @@ string string_compression(string s) {
 	return compress;
 }
 
+//prints square matrix (helper function for rotate matrix functions)
 void print_matrix(vector<vector<int> > m) {
 	int n = m.size();
 
@@ -265,6 +266,7 @@ void print_matrix(vector<vector<int> > m) {
 	}
 }
 
+// transposes square matrix (helper function for rotate matrix functions)
 vector<vector<int> > transpose_matrix(vector<vector<int> > m) {
 	int n = m.size();
 	int temp;
@@ -278,6 +280,7 @@ vector<vector<int> > transpose_matrix(vector<vector<int> > m) {
 	return m;
 }
 
+//reverses column elements of matrix (helper for rotate matrix functions)
 vector<vector<int> > reverse_column_elements(vector<vector<int> > m) {
 	int n = m.size();
 	m = transpose_matrix(m);
@@ -297,13 +300,20 @@ vector<vector<int> > reverse_column_elements(vector<vector<int> > m) {
 	return transpose_matrix(m);
 }
 
-//rotate matrix 90 degrees (not yet working)
+//rotate matrix 90 degrees O(n^2)
 vector<vector<int> > rotate_matrix_90(vector<vector<int> > m) {
 	return reverse_column_elements(transpose_matrix(m));
 }
 
+//rotate matrix 180 degrees O(n^2)
 vector<vector<int> > rotate_matrix_180(vector<vector<int> > m) {
 	return reverse_column_elements(transpose_matrix(reverse_column_elements(transpose_matrix(m))));
+}
+
+//if an element of an M x N matrix is zero, zero out the whole row and column.
+vector<vector<int> > zero_matrix(vector<vector<int> > m) {
+	int num_rows = m.size();
+	int num_cols = m[0].size();
 }
 
 int main() {
@@ -338,11 +348,14 @@ int main() {
 	one_away("pale","bake");
 
 	string s = string_compression("aaabbbccb");
-	cout << s << endl;*/
+	cout << s << endl;
 
 	vector<vector<int> > m = {{1,2,3},{4,5,6},{7,8,9}};
 	print_matrix(rotate_matrix_90(m));
 	cout << endl << endl;
-	print_matrix(rotate_matrix_180(m));
+	print_matrix(rotate_matrix_180(m));*/
+
+	vector<vector<int> >m = {{1,2},{3,4},{5,6}};
+	cout << m[0].size() << endl;
 
 }
