@@ -2,6 +2,7 @@
 #include <vector>
 #include <array>
 #include <unordered_set>
+#include <unordered_map>
 #include <math.h>
 #include <cmath>
 #include <tuple>
@@ -341,6 +342,75 @@ vector<vector<int> > zero_matrix(vector<vector<int> > m) {
 	return new_m;
 }
 
+vector<vector<int> > zero_matrix_opt(vector<vector<int> > m) {
+	int num_rows = m.size();
+	int num_cols = m[0].size();
+	vector<pair<int,int> > zeros;
+
+	for(int row=0; row<num_rows; row++) {
+		for(int col=0; col<num_cols; col++) {
+
+			//push zero (row,col) into zeros vec
+			if(m[row][col] == 0) 
+				zeros.push_back(make_pair(row,col));
+		}
+	}
+
+	//go through zeros and zero out entire row and entire col
+	for(int z=0; z<zeros.size(); z++) {
+		int row = zeros[z].first;
+		int col = zeros[z].second;
+
+		//zero out everything in the row
+		for(int i=0; i<num_cols; i++) {
+			m[row][i] = 0;
+		}
+
+		for(int i=0; i<num_rows; i++) {
+			m[i][col] = 0;
+		}
+	}
+
+	return m;
+}
+
+//checks if s1 is a substring of s2 //O(N)
+bool isSubstr(string s1, string s2) {
+	for(int i=0; i<s1.size(); i++) {
+		if(s1[i] != s2[i])
+			return false;
+	}
+	return true;
+}
+
+//rotatates string one to the right
+string rotateString(string s) {
+	string rotate = s;
+	int len = s.size();
+
+	rotate[0] = s[len-1];
+
+	for(int i=1; i<len; i++) {
+		rotate[i] = s[i-1];
+	} 
+	return rotate;
+}
+
+//check if s1 is a rotation of s2 with only one call to isSubstr
+bool stringRotation(string s1, string s2) {
+	//if not the same length then they cant be a rotation
+	if(s1.length() != s2.length())
+		return false;
+
+	//rotate and check substr
+	for(int i=0; i<s1.size(); i++) {
+		if(isSubstr(s1,s2))
+			return true;
+		s1 = rotateString(s1);
+	}
+	return false;
+}
+
 int main() {
 	vector<int> v1;
 	vector<int> v2;
@@ -378,7 +448,7 @@ int main() {
 	vector<vector<int> > m = {{1,2,3},{4,5,6},{7,8,9}};
 	print_matrix(rotate_matrix_90(m));
 	cout << endl << endl;
-	print_matrix(rotate_matrix_180(m));*/
+	print_matrix(rotate_matrix_180(m));
 
 	vector<vector<int> >m = {{1,0},{3,4},{5,6}};
 
@@ -403,5 +473,22 @@ int main() {
 		}
 		cout << endl;
 	}
+
+	string s1 = "HelloW";
+	string s2 = "HelloWorld!";
+	string s3 = "HelloWorldHello!";
+	string s4 = "World!Hello";
+	string s5 = "HelloWorld!";
+
+	cout << isSubstr(s1,s2) << endl;
+	cout << isSubstr(s3,s2) << endl;
+	cout << isSubstr(s2,s4) << endl;
+	cout << isSubstr(s2,s5) << endl;*/
+
+	string s1 = "waterbottle";
+	string s2 = "erbottlewat";
+	string s3 = "waterbottld";
+	cout << stringRotation(s1,s2) << endl;
+	cout << stringRotation(s1,s3) << endl;
 
 }
